@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+    <style>
+    .clear {
+        background-color: white;
+    }
+    .MyTable {
+        border: 3px solid black;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="jumbotron clear">
+            <div class='header'>
+                <h2>Hello {{request.session.First_Name}}!</h2>
+                <a href="/Logout">Logout</a>
+                <input type="button" class="btn btn-primary" id= "" value="New job!" onclick="window.location.href = '/new'" />
+            </div>
+            <table class="MyTable">
+                <thead class=table-active>
+                    <th>Job</th>
+                    <th>Location</th>
+                    <th>Actions</th>
+                </thead>
+                <tbody class="table table-striped">
+                    {% for job in jobs %}
+                    {% if job not in OwnedJobs and job not in CompletedJobs%}
+                    {% if job in OwnerlessJobs %}
+                    <tr>
+                        <td>{{job.Title}}</td>
+                        <td>{{job.Location}}</td>
+                        <td>
+                            {% if job in Cjobs %}
+                            <a href="/jobs/delete/{{job.id}}">Delete</a>
+                            <a href="/jobs/edit/{{job.id}}">Edit</a>
+                            {% endif %}
+                            <a href="/jobs/{{job.id}}">View</a>
+                            <a href="/jobs/add/{{job.id}}">Add</a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            <table class="MyTable">
+                <thead class=table-active>
+                    <th>Job</th>
+                    <th>Actions</th>
+                </thead>
+                <tbody class="table table-striped">
+                    {% for job in OwnedJobs %}
+                    {% if job not in CompletedJobs %}
+                    <tr>
+                        <td>{{job.Title}}</td>
+                        <td>
+                            <a href="/jobs/{{job.id}}">View</a>
+                            <a href="/jobs/giveup/{{job.id}}">Giveup</a>
+                            <a href="/jobs/Complete/{{job.id}}">Complete</a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

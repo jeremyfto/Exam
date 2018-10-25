@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+</head>
+<body>
+    <form action="{{CurID}}/PostEdit" method="post">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="Job_Title">Title:</label>
+            <input type="text" class="form-control" name="Job_Title" id="Job_Title" value="{{job.Title}}">
+        </div>
+        <div class="form-group">
+            <label for="Job_Desc">Description:</label>
+            <input type="text" class="form-control" name="Job_Desc" id="Job_Desc" value="{{job.Desc}}">
+        </div>
+        <div class="form-group">
+            <label for="Job_Loc">Location:</label>
+            <input type="text" class="form-control" name="Job_Loc" id="Job_Loc" value="{{job.Location}}">
+        </div>
+        <input type="button" class="btn btn-primary" value="Cancel" onclick="window.location.href = '/jobs'" />
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</body>
+</html>
